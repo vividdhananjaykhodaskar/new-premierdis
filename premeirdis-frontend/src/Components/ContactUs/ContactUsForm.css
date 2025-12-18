@@ -1,0 +1,231 @@
+
+/* Phone card: left-align numbers and style 'Call now' */
+.card-item.phone .phone-numbers{ text-align:left; margin-top:6px; }
+.card-item.phone .call-now{ color:#000; font-weight:700; display:block; width:147px; text-decoration:none; margin-top:8px; text-align:left; }
+/* Layout for contact section */
+:root{
+  --max-width:1100px;
+  --muted:#6b6b6b;
+  --card-border:#e3eef7;
+  --accent:#1ea36a;
+  --accent-dark:#158a52;
+  --soft-green-start:#f4fbf6;
+  --soft-green-end:#eef8ee;
+}
+
+.contact-section{
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color:#111;
+  padding:56px 20px 80px;
+  background: #fff;
+}
+
+.contact-wrapper{
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.contact-header{
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.contact-header h1{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 32px;
+  margin: 0 0 8px 0;
+  font-weight: 400;
+}
+
+.contact-header p{
+  margin: 0 auto;
+  color: var(--muted);
+  max-width: 720px;
+  line-height:1.6;
+  font-size:14px;
+  width:478px;
+}
+
+.contact-container{
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  align-items: start;
+  margin-top: 28px;
+  margin-left: 98px;
+}
+
+.contact-left .contact-card{
+  background-color: #F5F8EB;
+  border-radius:10px;
+  padding:20px;
+  box-shadow: 0 8px 20px rgba(27,43,38,0.06);
+  border:1px solid rgba(30,163,106,0.06);
+}
+
+.card-item{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:8px 0;
+}
+
+.icon{
+  min-width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  background:#fff;
+  color:var(--accent);
+  border-radius:50%;
+  font-size:18px;
+  box-shadow: 0 2px 6px rgba(14,40,30,0.04);
+}
+
+
+
+/* Smaller location icon specifically */
+.icon-location {
+    width: 16px;
+    height: 18px;
+}
+
+.item-body h4{
+  margin:0 0 6px 0;
+  font-size:14px;
+  text-align:left;
+  margin-left:0;
+  padding-left:0;
+}
+
+.muted{ color:var(--muted); font-size:13px; margin:0; }
+.link{ color:var(--accent-dark); display:inline-block; margin-top:6px; font-size:13px; text-decoration:none }
+
+/* Specific styling for the location card address block */
+.card-item.location .address{ text-align:left; margin-top:6px; margin-bottom:4px }
+.card-item.location .see-map{ color:#000; font-weight:700; display:block; margin-top:0; text-decoration:none;text-align: left; }
+
+/* Email card: left-align address and style 'Say Hello' */
+.card-item.email .email-address{ text-align:left; margin-top:6px; }
+.card-item.email .say-hello{ color:#000; font-weight:700; display:inline-block; margin-top:8px; text-decoration:none;text-align: left;    width: 147px; }
+
+.divider{ height:1px; background:rgba(21,46,61,0.03); margin:12px 0; }
+
+.contact-right .form-card{
+  border:1px solid var(--card-border);
+  border-radius:8px;
+  padding:22px 22px 18px 22px;
+  background:#fff;
+  width: 509px;
+  height: 416px;
+}
+
+.contact-right h3{
+  margin:0 0 12px 0;
+  font-size:20px;
+  font-weight:700;
+  margin-right: 41%;
+  margin-bottom: 7%;
+
+}
+
+form{ display:block }
+.row.two-cols{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
+label{ display:block }
+.label-text {
+    display: block;
+    font-size: 13px;
+    color: black;
+    margin-bottom: 8px;
+    margin-right: 99%;
+    font-weight: 700;
+}
+
+input[type="text"], input[type="email"], input, textarea{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #d6e6f2;
+  border-radius:6px;
+  font-size:14px;
+  background:#fff;
+  box-sizing:border-box;
+}
+
+textarea{ resize:vertical }
+
+input:focus, textarea:focus{ outline: none; box-shadow:0 0 0 3px rgba(29,160,110,0.08); border-color: rgba(29,160,110,0.25) }
+
+.label-block{ margin-top:14px }
+
+.form-footer{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:35px;}
+.small-note{ color:var(--muted); font-size:12px; display:flex; align-items:flex-start; max-width:68%; gap:8px }
+.small-note .note-icon{ width:14px; height:14px; border-radius:50%; border:1px solid var(--muted); display:inline-block; position:relative; margin-top:4px }
+.small-note .note-icon::after{ content:""; position:absolute; width:6px; height:6px; border-radius:50%; background:var(--muted); top:50%; left:50%; transform:translate(-50%,-50%) }
+.small-note .note-text{ line-height:1.2 }
+.small-note .small-link{ text-decoration:underline; color:inherit }
+
+.send-btn{
+  background:var(--accent);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.send-btn:hover{ background:var(--accent-dark) }
+
+/* Responsive */
+@media (max-width: 880px){
+  .contact-container{ grid-template-columns: 1fr; }
+  .form-footer{ flex-direction:column; align-items:flex-start }
+  .small-note{ max-width:100%; margin-bottom:12px }
+
+  /* Mobile-friendly overrides that keep desktop rules intact */
+  .contact-container{ margin-left:0; padding:0 12px; box-sizing:border-box }
+  .contact-right .form-card{ width:100%; height:auto }
+  .contact-left .contact-card{ width:100% }
+  .contact-header p{ width:auto; max-width:100% }
+}
+
+/* Additional mobile-only overrides (preserve desktop layout) */
+@media (max-width: 600px) {
+  .contact-section{ padding:32px 12px 40px }
+  .contact-header h1{ font-size:22px }
+  .contact-header p{ font-size:13px; padding:0 6px;     }
+
+  .contact-container{ gap:18px }
+  .contact-left .contact-card, .contact-right .form-card { padding:16px }
+
+  .row.two-cols{ grid-template-columns: 1fr }
+  .label-text{ margin-right:0 }
+  .contact-right h3{ margin-right:0; text-align:left }
+
+  .icon{ min-width:40px; height:40px }
+  .icon-img{width: 10px;
+    height: 13px;}
+
+  .contact-right .form-card{ padding:18px }
+  .send-btn{ width:100%; box-sizing:border-box }
+
+  /* make small-note stack nicely on very small screens */
+  .small-note{ flex-direction:row; gap:8px }
+
+  /* ensure left-aligned items remain left on small screens */
+  .card-item.location .address,
+  .card-item.email .email-address,
+  .card-item.phone .phone-numbers,
+  .card-item.location .see-map,
+  .card-item.email .say-hello,
+  .card-item.phone .call-now {
+    text-align:left;
+  }
+
+  /* Additional small-screen fixes */
+  .contact-container{ margin-left:0; padding:0 12px; box-sizing:border-box }
+  .contact-right .form-card{ width:100%; height:auto }
+  .contact-left .contact-card{ width:100% }
+  .contact-header p{ width:auto; max-width:100% }
+}
