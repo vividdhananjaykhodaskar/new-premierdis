@@ -1,0 +1,85 @@
+:root{
+  --footer-bg: #ffffff;
+  --muted:#5b5b5b;
+  --accent-green:#1ea36a;
+  --soft-footer:#f3f7ee;
+}
+
+.site-footer{ background:var(--footer-bg); color:#111; font-family: 'Georgia', serif; }
+.footer-top{ display:flex; justify-content:space-between; align-items:flex-start; padding:48px 60px; }
+.cta h2{ font-family: Georgia, 'Times New Roman', Times, serif; font-size:36px; margin:0 0 18px 0; line-height:1.05; }
+.cta h2 span{ display:block; font-size:44px; font-weight:700; margin-right: 54%; }
+.cta-btn{ background:var(--accent-green); color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer ;    margin-right: 64%;}
+.footer-nav{ display:flex; gap:48px }
+.footer-nav ul{ list-style:none; padding:0; margin:0; color:#111; font-family: 'Times New Roman', serif; text-align: left;}
+.footer-nav ul li{ margin:8px 0; font-size:14px }
+
+/* Make anchor links visually identical to plain list items */
+.footer-nav ul li a{
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: inherit;
+  display: inline-block;
+}
+
+.footer-nav ul li a:hover{ text-decoration: none; }
+
+.footer-bottom{
+  background: linear-gradient(180deg, #f6faf3 0%, #eef8ee 100%);
+  padding:22px 60px;
+  border-top:1px solid rgba(0,0,0,0.03);
+  max-width: 200%;
+  /* full-bleed across viewport while keeping inner padding */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+}
+.copyright{ color:var(--muted); font-size:13px; }
+.copyright p{ margin:4px 0 ; text-align: center; }
+
+/* Responsive adjustments */
+@media (max-width: 900px){
+  .footer-top{ flex-direction:column; gap:20px; padding:28px 24px }
+  .cta h2{ font-size:28px }
+  .cta h2 span{ font-size:34px;margin-right: 54% }
+  .footer-nav{ flex-wrap:wrap; gap:28px }
+  .footer-nav ul{ min-width:140px }
+  .footer-bottom{ padding:18px 24px }
+
+  /* Prevent horizontal overflow from full-bleed footer on small screens */
+  .footer-bottom{ width:auto; left:0; right:0; margin-left:0; margin-right:0; box-sizing:border-box }
+}
+
+@media (max-width:480px){
+  .footer-top{ padding:20px 14px }
+  .cta h2{ font-size:20px }
+  .cta h2 span{ font-size:26px }
+  .footer-nav{ gap:18px }
+  .footer-nav ul li{ font-size:13px }
+  .footer-bottom{ padding:12px 14px }
+
+  /* Mobile: make each nav item appear as its own line stacked vertically
+     and ensure columns collapse into a single column matching the screenshot. */
+  .footer-nav{ display:block; }
+  .footer-nav ul{ min-width:auto; margin:0 0 12px 0; }
+  .footer-nav ul li{ display:block; width:100%; margin:6px 0; }
+  .footer-nav ul{ padding-left:0 }
+  .footer-nav ul li a{ display:inline-block }
+}
+
+/* Mobile tweaks to make heading stack exactly and match button appearance */
+@media (max-width:600px) {
+  .cta h2{ font-size:20px; line-height:1.05; margin:0 }
+.cta h2 span {
+    display: block;
+    font-size: 44px;
+    font-weight: 700;
+    margin-right: 54%;
+}
+  .cta-btn{ display:inline-block; margin-top:10px; padding:8px 14px; border-radius:8px; background:var(--accent-green); color:#fff; font-size:14px }
+}
