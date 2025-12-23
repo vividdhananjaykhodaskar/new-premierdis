@@ -9,6 +9,12 @@ import { r2Storage } from '@payloadcms/storage-r2'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { ContactUs } from './collections/ContactUs'
+import { Features } from './collections/Features'
+import { Footer } from './collections/Footer'
+import { Hero } from './collections/Hero'
+import { NavBar } from './collections/NavBar'
+import { WhatWeDo } from './collections/WhatWeDo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +34,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, ContactUs, Features, Footer, Hero, NavBar, WhatWeDo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -38,7 +44,7 @@ export default buildConfig({
   plugins: [
     r2Storage({
       bucket: cloudflare.env.R2,
-      collections: { media: true },
+      collections: { media: true},
     }),
   ],
 })

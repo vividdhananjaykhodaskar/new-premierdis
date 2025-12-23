@@ -18,8 +18,8 @@
   "d1_databases": [
     {
       "binding": "D1",
-      "database_id": "13b21df3-28ba-4667-809a-70c501ac57e1",
-      "database_name": "premierdis-d1",
+      "database_id": "0cfc306f-ec7a-4940-8e26-b9b02dd7f3ee",
+      "database_name": "premierdis",
       "remote": true,
     },
   ],

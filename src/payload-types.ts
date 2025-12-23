@@ -69,6 +69,12 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'contact-us': ContactUs;
+    features: Feature;
+    footer: Footer;
+    hero: Hero;
+    'nav-items': NavItem;
+    'what-we-do': WhatWeDo;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +84,12 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
+    features: FeaturesSelect<false> | FeaturesSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    'nav-items': NavItemsSelect<false> | NavItemsSelect<true>;
+    'what-we-do': WhatWeDoSelect<false> | WhatWeDoSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -122,6 +134,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  /**
+   * Admin users can create, edit, and delete content
+   */
+  roles: 'admin'[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -146,6 +162,9 @@ export interface User {
  */
 export interface Media {
   id: number;
+  /**
+   * Alternative text for accessibility
+   */
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -156,6 +175,226 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+}
+/**
+ * Manage contact form submissions
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us".
+ */
+export interface ContactUs {
+  id: number;
+  /**
+   * Contact person name
+   */
+  name: string;
+  /**
+   * Contact email address
+   */
+  email: string;
+  /**
+   * Message subject
+   */
+  subject?: string | null;
+  /**
+   * Message content
+   */
+  message: string;
+  /**
+   * Optional contact phone number
+   */
+  phone?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage feature items
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "features".
+ */
+export interface Feature {
+  id: number;
+  /**
+   * Feature title
+   */
+  title: string;
+  /**
+   * Feature description
+   */
+  summary?: string | null;
+  /**
+   * Icon class or identifier
+   */
+  icon?: string | null;
+  /**
+   * Feature image
+   */
+  image?: (number | null) | Media;
+  /**
+   * Display order
+   */
+  order?: number | null;
+  /**
+   * Whether this feature is visible
+   */
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage footer sections and links
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  /**
+   * Section label/title
+   */
+  label: string;
+  /**
+   * Footer section content
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Links within this footer section
+   */
+  links?:
+    | {
+        /**
+         * Link text
+         */
+        title?: string | null;
+        /**
+         * Link URL
+         */
+        url?: string | null;
+        /**
+         * Display order
+         */
+        order?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Footer section position
+   */
+  position?: ('bottom' | 'side') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage hero section content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  /**
+   * Main hero headline
+   */
+  headline: string;
+  /**
+   * Subheading text
+   */
+  subheadline?: string | null;
+  /**
+   * Call-to-action button text
+   */
+  ctaText?: string | null;
+  /**
+   * Call-to-action button URL
+   */
+  ctaUrl?: string | null;
+  /**
+   * Hero background image
+   */
+  background?: (number | null) | Media;
+  /**
+   * Whether this hero section is visible
+   */
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage navigation menu items
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav-items".
+ */
+export interface NavItem {
+  id: number;
+  /**
+   * Menu item text
+   */
+  title: string;
+  /**
+   * Menu item link URL
+   */
+  url: string;
+  /**
+   * Display order in menu
+   */
+  order?: number | null;
+  /**
+   * Whether this menu item is visible
+   */
+  visible?: boolean | null;
+  /**
+   * Whether this link opens in a new tab
+   */
+  external?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage "What We Do" section items
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-we-do".
+ */
+export interface WhatWeDo {
+  id: number;
+  /**
+   * Item title
+   */
+  title: string;
+  /**
+   * Item description
+   */
+  summary?: string | null;
+  /**
+   * Item image
+   */
+  image?: (number | null) | Media;
+  /**
+   * Display order
+   */
+  order?: number | null;
+  /**
+   * Whether this item is visible
+   */
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -188,6 +427,30 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'contact-us';
+        value: number | ContactUs;
+      } | null)
+    | ({
+        relationTo: 'features';
+        value: number | Feature;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: number | Footer;
+      } | null)
+    | ({
+        relationTo: 'hero';
+        value: number | Hero;
+      } | null)
+    | ({
+        relationTo: 'nav-items';
+        value: number | NavItem;
+      } | null)
+    | ({
+        relationTo: 'what-we-do';
+        value: number | WhatWeDo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -236,6 +499,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -268,6 +532,92 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us_select".
+ */
+export interface ContactUsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  subject?: T;
+  message?: T;
+  phone?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "features_select".
+ */
+export interface FeaturesSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  icon?: T;
+  image?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  label?: T;
+  content?: T;
+  links?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        order?: T;
+        id?: T;
+      };
+  position?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  headline?: T;
+  subheadline?: T;
+  ctaText?: T;
+  ctaUrl?: T;
+  background?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav-items_select".
+ */
+export interface NavItemsSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  order?: T;
+  visible?: T;
+  external?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-we-do_select".
+ */
+export interface WhatWeDoSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  image?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
