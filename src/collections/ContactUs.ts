@@ -15,10 +15,10 @@ export const ContactUs: CollectionConfig = {
   },
   timestamps: true,
   access: {
-    // Public can read submitted contacts
+    // Public can read and create contact submissions (form submissions)
     read: () => true,
-    // Only admins can create/update/delete
-    create: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
+    create: () => true,
+    // Only admins can update/delete
     update: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
     delete: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
   },

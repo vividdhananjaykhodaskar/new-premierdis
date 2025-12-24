@@ -30,7 +30,7 @@ export const Features: CollectionConfig = {
       admin: { description: 'Feature title' },
     },
     {
-      name: 'summary',
+      name: 'description',
       type: 'textarea',
       admin: { description: 'Feature description' },
     },

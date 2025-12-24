@@ -9,8 +9,8 @@ import type { CollectionConfig } from 'payload'
 export const Footer: CollectionConfig = {
   slug: 'footer',
   admin: {
-    useAsTitle: 'label',
-    defaultColumns: ['label', 'position'],
+    useAsTitle: 'copyrightMessage',
+    defaultColumns: ['copyrightMessage', 'createdAt'],
     description: 'Manage footer sections and links',
   },
   timestamps: true,
@@ -24,47 +24,43 @@ export const Footer: CollectionConfig = {
   },
   fields: [
     {
-      name: 'label',
-      type: 'text',
-      required: true,
-      admin: { description: 'Section label/title' },
-    },
-    {
-      name: 'content',
-      type: 'richText',
-      admin: { description: 'Footer section content' },
-    },
-    {
-      name: 'links',
+      name: 'sections',
       type: 'array',
-      admin: { description: 'Links within this footer section' },
+      admin: { description: 'Footer sections with links' },
       fields: [
         {
-          name: 'title',
+          name: 'label',
           type: 'text',
-          admin: { description: 'Link text' },
+          admin: { description: 'Section label/title' },
         },
         {
-          name: 'url',
-          type: 'text',
-          admin: { description: 'Link URL' },
-        },
-        {
-          name: 'order',
-          type: 'number',
-          admin: { description: 'Display order' },
+          name: 'links',
+          type: 'array',
+          admin: { description: 'Links in this section' },
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              admin: { description: 'Link text' },
+            },
+            {
+              name: 'url',
+              type: 'text',
+              admin: { description: 'Link URL' },
+            },
+          ],
         },
       ],
     },
     {
-      name: 'position',
-      type: 'select',
-      options: [
-        { label: 'Bottom', value: 'bottom' },
-        { label: 'Side', value: 'side' },
-      ],
-      defaultValue: 'bottom',
-      admin: { description: 'Footer section position' },
+      name: 'copyrightMessage',
+      type: 'text',
+      admin: { description: 'Copyright message (e.g., "Made with love for great people.")' },
+    },
+    {
+      name: 'copyrightYear',
+      type: 'text',
+      admin: { description: 'Copyright text (e.g., "© Copyright 2024 - JCAR LLC dba Premier...")' },
     },
   ],
 }

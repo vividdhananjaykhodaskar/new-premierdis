@@ -9,8 +9,8 @@ import type { CollectionConfig } from 'payload'
 export const NavBar: CollectionConfig = {
   slug: 'nav-items',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'url', 'order', 'visible'],
+    useAsTitle: 'label',
+    defaultColumns: ['label', 'url', 'order', 'visible'],
     description: 'Manage navigation menu items',
   },
   timestamps: true,
@@ -24,7 +24,7 @@ export const NavBar: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
+      name: 'label',
       type: 'text',
       required: true,
       admin: { description: 'Menu item text' },

@@ -30,9 +30,14 @@ export const WhatWeDo: CollectionConfig = {
       admin: { description: 'Item title' },
     },
     {
-      name: 'summary',
-      type: 'textarea',
-      admin: { description: 'Item description' },
+      name: 'subtitle',
+      type: 'text',
+      admin: { description: 'Item subtitle' },
+    },
+    {
+      name: 'mainTitle',
+      type: 'text',
+      admin: { description: 'Main section title (used only on first item)' },
     },
     {
       name: 'image',

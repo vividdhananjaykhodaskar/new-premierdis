@@ -222,7 +222,7 @@ export interface Feature {
   /**
    * Feature description
    */
-  summary?: string | null;
+  description?: string | null;
   /**
    * Icon class or identifier
    */
@@ -251,51 +251,41 @@ export interface Feature {
 export interface Footer {
   id: number;
   /**
-   * Section label/title
+   * Footer sections with links
    */
-  label: string;
-  /**
-   * Footer section content
-   */
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Links within this footer section
-   */
-  links?:
+  sections?:
     | {
         /**
-         * Link text
+         * Section label/title
          */
-        title?: string | null;
+        label?: string | null;
         /**
-         * Link URL
+         * Links in this section
          */
-        url?: string | null;
-        /**
-         * Display order
-         */
-        order?: number | null;
+        links?:
+          | {
+              /**
+               * Link text
+               */
+              label?: string | null;
+              /**
+               * Link URL
+               */
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
   /**
-   * Footer section position
+   * Copyright message (e.g., "Made with love for great people.")
    */
-  position?: ('bottom' | 'side') | null;
+  copyrightMessage?: string | null;
+  /**
+   * Copyright text (e.g., "© Copyright 2024 - JCAR LLC dba Premier...")
+   */
+  copyrightYear?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -346,7 +336,7 @@ export interface NavItem {
   /**
    * Menu item text
    */
-  title: string;
+  label: string;
   /**
    * Menu item link URL
    */
@@ -379,9 +369,13 @@ export interface WhatWeDo {
    */
   title: string;
   /**
-   * Item description
+   * Item subtitle
    */
-  summary?: string | null;
+  subtitle?: string | null;
+  /**
+   * Main section title (used only on first item)
+   */
+  mainTitle?: string | null;
   /**
    * Item image
    */
@@ -553,7 +547,7 @@ export interface ContactUsSelect<T extends boolean = true> {
  */
 export interface FeaturesSelect<T extends boolean = true> {
   title?: T;
-  summary?: T;
+  description?: T;
   icon?: T;
   image?: T;
   order?: T;
@@ -566,17 +560,21 @@ export interface FeaturesSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  label?: T;
-  content?: T;
-  links?:
+  sections?:
     | T
     | {
-        title?: T;
-        url?: T;
-        order?: T;
+        label?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
         id?: T;
       };
-  position?: T;
+  copyrightMessage?: T;
+  copyrightYear?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -600,7 +598,7 @@ export interface HeroSelect<T extends boolean = true> {
  * via the `definition` "nav-items_select".
  */
 export interface NavItemsSelect<T extends boolean = true> {
-  title?: T;
+  label?: T;
   url?: T;
   order?: T;
   visible?: T;
@@ -614,7 +612,8 @@ export interface NavItemsSelect<T extends boolean = true> {
  */
 export interface WhatWeDoSelect<T extends boolean = true> {
   title?: T;
-  summary?: T;
+  subtitle?: T;
+  mainTitle?: T;
   image?: T;
   order?: T;
   active?: T;
