@@ -56,5 +56,10 @@ export const Features: CollectionConfig = {
       defaultValue: true,
       admin: { description: 'Whether this feature is visible' },
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time' },
+    },
   ],
 }

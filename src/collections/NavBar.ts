@@ -52,5 +52,16 @@ export const NavBar: CollectionConfig = {
       defaultValue: false,
       admin: { description: 'Whether this link opens in a new tab' },
     },
+    {
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { description: 'Whether this nav item is active (preferred over visible)' },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time' },
+    },
   ],
 }

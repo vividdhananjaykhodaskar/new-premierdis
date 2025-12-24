@@ -115,6 +115,11 @@ export const Hero: CollectionConfig = {
       defaultValue: false,
       admin: { description: 'Whether this hero section is visible (only one active at a time)' },
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time' },
+    },
   ],
 }
 

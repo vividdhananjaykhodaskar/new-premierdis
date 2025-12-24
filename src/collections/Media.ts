@@ -37,6 +37,17 @@ export const Media: CollectionConfig = {
         description: 'Alternative text for accessibility',
       },
     },
+    {
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { description: 'Whether this media item is visible/public' },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time' },
+    },
   ],
   timestamps: true,
 }

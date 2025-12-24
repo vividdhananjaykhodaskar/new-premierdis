@@ -50,5 +50,11 @@ export const Users: CollectionConfig = {
         description: 'Admin users can create, edit, and delete content',
       },
     },
+    {
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { description: 'Whether this user account is active' },
+    },
   ],
 }

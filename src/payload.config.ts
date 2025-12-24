@@ -10,6 +10,7 @@ import { r2Storage } from '@payloadcms/storage-r2'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { ContactUs } from './collections/ContactUs'
+import { ContactSubmissions } from './collections/ContactSubmissions'
 import { Features } from './collections/Features'
 import { Footer } from './collections/Footer'
 import { Hero } from './collections/Hero'
@@ -34,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, ContactUs, Features, Footer, Hero, NavBar, WhatWeDo],
+  collections: [Users, Media, ContactUs, ContactSubmissions, Features, Footer, Hero, NavBar, WhatWeDo],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

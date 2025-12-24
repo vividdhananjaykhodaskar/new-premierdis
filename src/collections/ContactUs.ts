@@ -9,58 +9,100 @@ import type { CollectionConfig } from 'payload'
 export const ContactUs: CollectionConfig = {
   slug: 'contact-us',
   admin: {
-    useAsTitle: 'email',
-    defaultColumns: ['email', 'name', 'subject', 'createdAt'],
-    description: 'Manage contact form submissions',
+    useAsTitle: 'headerTitle',
+    defaultColumns: ['headerTitle', 'isSiteContent', 'createdAt'],
+    description: 'Site-managed contact page content (separate from user submissions)',
   },
   timestamps: true,
   access: {
-    // Public can read and create contact submissions (form submissions)
+    // Public can read the site content, only admins can create/update/delete
     read: () => true,
-    create: () => true,
-    // Only admins can update/delete
+    create: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
     update: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
     delete: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
   },
   fields: [
+    // Flag to distinguish site content documents from user submissions
     {
-      name: 'name',
+      name: 'isSiteContent',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Set to true for the site-managed contact info (admin only)' },
+    },
+
+    // Site content fields (only used when `isSiteContent` is true)
+    {
+      name: 'headerTitle',
       type: 'text',
-      required: true,
-      admin: {
-        description: 'Contact person name',
-      },
+      admin: { description: 'Main header title for the contact page' },
     },
     {
-      name: 'email',
-      type: 'email',
-      required: true,
-      index: true,
-      admin: {
-        description: 'Contact email address',
-      },
-    },
-    {
-      name: 'subject',
-      type: 'text',
-      admin: {
-        description: 'Message subject',
-      },
-    },
-    {
-      name: 'message',
+      name: 'headerSubtitle',
       type: 'textarea',
-      required: true,
-      admin: {
-        description: 'Message content',
-      },
+      admin: { description: 'Header subtitle/paragraph' },
+    },
+
+    // Left card (location)
+    {
+      name: 'locationTitle',
+      type: 'text',
+      admin: { description: 'Location card title (e.g., Drop us a line)' },
     },
     {
-      name: 'phone',
+      name: 'address',
+      type: 'textarea',
+      admin: { description: 'Address HTML/text for the location card' },
+    },
+    {
+      name: 'seeMapLink',
       type: 'text',
-      admin: {
-        description: 'Optional contact phone number',
-      },
+      admin: { description: 'URL for See Map link' },
+    },
+
+    // Email card
+    {
+      name: 'emailTitle',
+      type: 'text',
+      admin: { description: 'Email card title (e.g., Email)' },
+    },
+    {
+      name: 'emailAddress',
+      type: 'text',
+      admin: { description: 'Public contact email address' },
+    },
+    {
+      name: 'emailLink',
+      type: 'text',
+      admin: { description: 'mailto: link or other URL for the email card' },
+    },
+
+    // Phone card
+    {
+      name: 'phoneTitle',
+      type: 'text',
+      admin: { description: 'Phone card title (e.g., Call)' },
+    },
+    {
+      name: 'phoneNumbers',
+      type: 'textarea',
+      admin: { description: 'Phone numbers text (can include line breaks)' },
+    },
+    {
+      name: 'phoneLink',
+      type: 'text',
+      admin: { description: 'tel: link or other URL for phone action' },
+    },
+    
+    {
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { description: 'Whether this submission is active/visible in the admin list' },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time or handled time' },
     },
   ],
 }

@@ -62,5 +62,16 @@ export const Footer: CollectionConfig = {
       type: 'text',
       admin: { description: 'Copyright text (e.g., "© Copyright 2024 - JCAR LLC dba Premier...")' },
     },
+    {
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { description: 'Whether this footer is active/public' },
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: { description: 'Optional publication date/time' },
+    },
   ],
 }

@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     'contact-us': ContactUs;
+    'contact-submissions': ContactSubmission;
     features: Feature;
     footer: Footer;
     hero: Hero;
@@ -85,6 +86,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
+    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     features: FeaturesSelect<false> | FeaturesSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
@@ -138,6 +140,10 @@ export interface User {
    * Admin users can create, edit, and delete content
    */
   roles: 'admin'[];
+  /**
+   * Whether this user account is active
+   */
+  active?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -166,6 +172,14 @@ export interface Media {
    * Alternative text for accessibility
    */
   alt: string;
+  /**
+   * Whether this media item is visible/public
+   */
+  active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -177,12 +191,79 @@ export interface Media {
   height?: number | null;
 }
 /**
- * Manage contact form submissions
+ * Site-managed contact page content (separate from user submissions)
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-us".
  */
 export interface ContactUs {
+  id: number;
+  /**
+   * Set to true for the site-managed contact info (admin only)
+   */
+  isSiteContent?: boolean | null;
+  /**
+   * Main header title for the contact page
+   */
+  headerTitle?: string | null;
+  /**
+   * Header subtitle/paragraph
+   */
+  headerSubtitle?: string | null;
+  /**
+   * Location card title (e.g., Drop us a line)
+   */
+  locationTitle?: string | null;
+  /**
+   * Address HTML/text for the location card
+   */
+  address?: string | null;
+  /**
+   * URL for See Map link
+   */
+  seeMapLink?: string | null;
+  /**
+   * Email card title (e.g., Email)
+   */
+  emailTitle?: string | null;
+  /**
+   * Public contact email address
+   */
+  emailAddress?: string | null;
+  /**
+   * mailto: link or other URL for the email card
+   */
+  emailLink?: string | null;
+  /**
+   * Phone card title (e.g., Call)
+   */
+  phoneTitle?: string | null;
+  /**
+   * Phone numbers text (can include line breaks)
+   */
+  phoneNumbers?: string | null;
+  /**
+   * tel: link or other URL for phone action
+   */
+  phoneLink?: string | null;
+  /**
+   * Whether this submission is active/visible in the admin list
+   */
+  active?: boolean | null;
+  /**
+   * Optional publication date/time or handled time
+   */
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Public contact form submissions
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions".
+ */
+export interface ContactSubmission {
   id: number;
   /**
    * Contact person name
@@ -204,6 +285,10 @@ export interface ContactUs {
    * Optional contact phone number
    */
   phone?: string | null;
+  /**
+   * Whether the submission is active
+   */
+  active?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -239,6 +324,10 @@ export interface Feature {
    * Whether this feature is visible
    */
   active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -286,6 +375,14 @@ export interface Footer {
    * Copyright text (e.g., "© Copyright 2024 - JCAR LLC dba Premier...")
    */
   copyrightYear?: string | null;
+  /**
+   * Whether this footer is active/public
+   */
+  active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -321,6 +418,10 @@ export interface Hero {
    * Whether this hero section is visible (only one active at a time)
    */
   active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -353,6 +454,14 @@ export interface NavItem {
    * Whether this link opens in a new tab
    */
   external?: boolean | null;
+  /**
+   * Whether this nav item is active (preferred over visible)
+   */
+  active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -373,9 +482,9 @@ export interface WhatWeDo {
    */
   subtitle?: string | null;
   /**
-   * Main section title (used only on first item)
+   * Item description (also used as main section description if present on first item)
    */
-  mainTitle?: string | null;
+  description?: string | null;
   /**
    * Item image
    */
@@ -388,6 +497,26 @@ export interface WhatWeDo {
    * Whether this item is visible
    */
   active?: boolean | null;
+  /**
+   * Main section title (used only on first item)
+   */
+  mainTitle?: string | null;
+  /**
+   * Small label shown above the main title (e.g., ONE-STOP SOLUTION)
+   */
+  label?: string | null;
+  /**
+   * Call-to-action text for the main section
+   */
+  cta?: string | null;
+  /**
+   * Optional video embed URL (e.g., https://www.youtube.com/embed/...)
+   */
+  videoUrl?: string | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -426,6 +555,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-us';
         value: number | ContactUs;
+      } | null)
+    | ({
+        relationTo: 'contact-submissions';
+        value: number | ContactSubmission;
       } | null)
     | ({
         relationTo: 'features';
@@ -495,6 +628,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   roles?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -518,6 +652,8 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  active?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -533,11 +669,34 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "contact-us_select".
  */
 export interface ContactUsSelect<T extends boolean = true> {
+  isSiteContent?: T;
+  headerTitle?: T;
+  headerSubtitle?: T;
+  locationTitle?: T;
+  address?: T;
+  seeMapLink?: T;
+  emailTitle?: T;
+  emailAddress?: T;
+  emailLink?: T;
+  phoneTitle?: T;
+  phoneNumbers?: T;
+  phoneLink?: T;
+  active?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   subject?: T;
   message?: T;
   phone?: T;
+  active?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -552,6 +711,7 @@ export interface FeaturesSelect<T extends boolean = true> {
   image?: T;
   order?: T;
   active?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -575,6 +735,8 @@ export interface FooterSelect<T extends boolean = true> {
       };
   copyrightMessage?: T;
   copyrightYear?: T;
+  active?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -589,6 +751,7 @@ export interface HeroSelect<T extends boolean = true> {
   ctaUrl?: T;
   background?: T;
   active?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -603,6 +766,8 @@ export interface NavItemsSelect<T extends boolean = true> {
   order?: T;
   visible?: T;
   external?: T;
+  active?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -613,10 +778,15 @@ export interface NavItemsSelect<T extends boolean = true> {
 export interface WhatWeDoSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
-  mainTitle?: T;
+  description?: T;
   image?: T;
   order?: T;
   active?: T;
+  mainTitle?: T;
+  label?: T;
+  cta?: T;
+  videoUrl?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

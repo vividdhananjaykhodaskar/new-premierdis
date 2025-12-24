@@ -19,11 +19,17 @@ export const GET = async (request: Request) => {
     const url = new URL(request.url)
     const qp = url.searchParams
 
+    const where: any = {}
+    if (qp.get('site') === 'true') {
+      where.isSiteContent = { equals: true }
+    }
+
     const limit = qp.get('limit') ? Number(qp.get('limit')) : 50
     const depth = qp.get('depth') ? Number(qp.get('depth')) : 1
 
     const result = await payload.find({
       collection: 'contact-us',
+      where: Object.keys(where).length ? where : undefined,
       limit,
       depth,
     })
@@ -54,8 +60,9 @@ export const POST = async (request: Request) => {
       phone?: string
     }
 
+    // Create submission in dedicated submissions collection
     const result = await payload.create({
-      collection: 'contact-us',
+      collection: 'contact-submissions',
       data: {
         name: body.name || '',
         email: body.email || '',
