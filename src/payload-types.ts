@@ -328,11 +328,12 @@ export interface Hero {
    */
   background?: (number | null) | Media;
   /**
-   * Whether this hero section is visible
+   * Whether this hero section is visible (only one active at a time)
    */
   active?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Manage navigation menu items
@@ -592,6 +593,7 @@ export interface HeroSelect<T extends boolean = true> {
   active?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

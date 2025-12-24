@@ -12,6 +12,14 @@ export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
+  // Fetch the active hero using the Local API so this runs server-side
+  const heroResult = await payload.find({
+    collection: 'hero',
+    where: { active: { equals: true } },
+    limit: 1,
+    depth: 1,
+  })
+  const hero = heroResult?.docs?.[0] ?? null
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
@@ -27,8 +35,19 @@ export default async function HomePage() {
             width={65}
           />
         </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
+        {!user && !hero && <h1>Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
+        {hero && (
+          <div className="hero">
+            <h1>{hero.headline}</h1>
+            {hero.subheadline && <p>{hero.subheadline}</p>}
+            {hero.ctaText && hero.ctaUrl && (
+              <a className="cta" href={hero.ctaUrl} target="_blank" rel="noopener noreferrer">
+                {hero.ctaText}
+              </a>
+            )}
+          </div>
+        )}
         <div className="links">
           <a
             className="admin"

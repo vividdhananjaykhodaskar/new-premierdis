@@ -8,8 +8,8 @@ test.describe('Frontend', () => {
     page = await context.newPage()
   })
 
-  test('can go on homepage', async ({ page }) => {
-    await page.goto('http://localhost:3000')
+  test('can go on homepage', async ({ page, baseURL }) => {
+    await page.goto('/')
 
     await expect(page).toHaveTitle(/Payload Blank Template/)
 

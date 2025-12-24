@@ -47,6 +47,13 @@ export default buildConfig({
       collections: { media: true},
     }),
   ],
+  serverURL: process.env.NEXT_PUBLIC_BACKEND_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  cors: [
+    'https://premierdis-frontend-6ve.pages.dev',
+    'https://master.premierdis-frontend-6ve.pages.dev',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ],
 })
 
 // Adapted from https://github.com/opennextjs/opennextjs-cloudflare/blob/d00b3a13e42e65aad76fba41774815726422cc39/packages/cloudflare/src/api/cloudflare-context.ts#L328C36-L328C46

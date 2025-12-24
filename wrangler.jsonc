@@ -75,4 +75,31 @@
   //     ]
   //   }
   // }
+  // Per-environment overrides. Add values here to match any Dashboard-only bindings/vars
+  "env": {
+    "production": {
+      "name": "new-premierdis",
+      "d1_databases": [
+        {
+          "binding": "D1",
+          "database_id": "0cfc306f-ec7a-4940-8e26-b9b02dd7f3ee",
+          "database_name": "premierdis",
+          "remote": true
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "R2",
+          "bucket_name": "premierdis-bucket",
+          "preview_bucket_name": "premierdis-bucket"
+        }
+      ],
+      // Non-secret environment variables: adjust values as needed
+      "vars": {
+        "NEXT_PUBLIC_FRONTEND_URL": "https://premierdis-frontend-6ve.pages.dev",
+        "NEXT_PUBLIC_BACKEND_URL": "https://new-premierdis.martyn-benjamin.workers.dev",
+        "CLOUDFLARE_ENV": "production"
+      }
+    }
+  }
 }
