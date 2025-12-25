@@ -4,7 +4,7 @@ import type { CollectionConfig } from 'payload'
  * ContactSubmissions Collection - stores public form submissions
  */
 export const ContactSubmissions: CollectionConfig = {
-  slug: 'contact-submissions',
+  slug: 'contact-submissions-form',
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'name', 'createdAt'],

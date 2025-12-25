@@ -28,7 +28,7 @@ export const GET = async (request: Request) => {
     const depth = qp.get('depth') ? Number(qp.get('depth')) : 1
 
     const result = await payload.find({
-      collection: 'contact-us',
+      collection: 'contact-us-content',
       where: Object.keys(where).length ? where : undefined,
       limit,
       depth,
@@ -62,7 +62,7 @@ export const POST = async (request: Request) => {
 
     // Create submission in dedicated submissions collection
     const result = await payload.create({
-      collection: 'contact-submissions',
+      collection: 'contact-submissions-form',
       data: {
         name: body.name || '',
         email: body.email || '',

@@ -1,21 +1,21 @@
 import type { CollectionConfig } from 'payload'
 
 /**
- * Features Collection - Admin-Only Management
+ * Services Collection - Admin-Only Management
  * 
- * Manages feature list items.
+ * Manages service offerings with icon and description.
  * Public can read, only admins can modify.
  */
-export const Features: CollectionConfig = {
-  slug: 'features-final',
+export const Services: CollectionConfig = {
+  slug: 'services-final',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'order', 'active'],
-    description: 'Manage feature items',
+    description: 'Manage service offerings',
   },
   timestamps: true,
   access: {
-    // Public can read features
+    // Public can read services
     read: () => true,
     // Only admins can create/update/delete
     create: ({ req: { user } }) => (user?.roles?.includes('admin')) ?? false,
@@ -24,41 +24,23 @@ export const Features: CollectionConfig = {
   },
   fields: [
     {
-      name: 'mainTitle',
-      type: 'text',
-      admin: { description: 'Main section header title (e.g., Everything in One Place)' },
-    },
-    {
-      name: 'mainSubtitle',
-      type: 'text',
-      admin: { description: 'Main section header subtitle (e.g., We go further than all of our competitors.)' },
-    },
-    {
       name: 'title',
       type: 'text',
       required: true,
-      admin: { description: 'Feature title' },
+      admin: { description: 'Service title' },
     },
     {
       name: 'subtitle',
       type: 'text',
-      admin: { description: 'Feature subtitle (renders under title)' },
+      required: true,
+      admin: { description: 'Service subtitle' },
     },
     {
-      name: 'description',
-      type: 'textarea',
-      admin: { description: 'Feature description' },
-    },
-    // {
-    //   name: 'icon',
-    //   type: 'text',
-    //   admin: { description: 'Icon class or identifier' },
-    // },
-    {
-      name: 'image',
+      name: 'icon',
       type: 'relationship',
       relationTo: 'media',
-      admin: { description: 'Feature image' },
+      required: true,
+      admin: { description: 'Service icon image' },
     },
     {
       name: 'order',
@@ -69,7 +51,7 @@ export const Features: CollectionConfig = {
       name: 'active',
       type: 'checkbox',
       defaultValue: true,
-      admin: { description: 'Whether this feature is visible' },
+      admin: { description: 'Whether this service is visible' },
     },
     {
       name: 'publishedAt',

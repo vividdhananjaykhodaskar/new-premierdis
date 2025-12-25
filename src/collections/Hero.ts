@@ -14,14 +14,14 @@ import type { CollectionConfig } from 'payload'
  *   maintain transactional safety.
  */
 export const Hero: CollectionConfig = {
-  slug: 'hero',
+  slug: 'hero-final',
   labels: {
     singular: 'Hero',
     plural: 'Heroes',
   },
   admin: {
-    useAsTitle: 'headline',
-    defaultColumns: ['headline', 'subheadline', 'active'],
+    useAsTitle: 'titlePremier',
+    defaultColumns: ['titlePremier', 'active'],
     description: 'Manage hero section content',
   },
   timestamps: true,
@@ -49,7 +49,7 @@ export const Hero: CollectionConfig = {
           if (doc.active) {
             // Find other active hero docs excluding current
             const otherActive = await req.payload.find({
-              collection: 'hero',
+              collection: 'hero-final',
               where: {
                 and: [
                   { active: { equals: true } },
@@ -64,7 +64,7 @@ export const Hero: CollectionConfig = {
               await Promise.all(
                 otherActive.docs.map((other) =>
                   req.payload.update({
-                    collection: 'hero',
+                    collection: 'hero-final',
                     id: other.id,
                     data: { active: false },
                     req,
@@ -83,15 +83,27 @@ export const Hero: CollectionConfig = {
   },
   fields: [
     {
-      name: 'headline',
+      name: 'titlePremier',
       type: 'text',
       required: true,
-      admin: { description: 'Main hero headline' },
+      admin: { description: "Main headline's premier part (e.g. 'Premier')" },
     },
     {
-      name: 'subheadline',
+      name: 'subtitleLines',
+      type: 'array',
+      admin: { description: 'Subtitle lines (one per row) e.g. Document / Imaging / Solutions' },
+      fields: [
+        {
+          name: 'line',
+          type: 'text',
+          admin: { description: 'One subtitle line' },
+        },
+      ],
+    },
+    {
+      name: 'subtext',
       type: 'text',
-      admin: { description: 'Subheading text' },
+      admin: { description: 'Supporting subtext under the title' },
     },
     {
       name: 'ctaText',
@@ -101,13 +113,13 @@ export const Hero: CollectionConfig = {
     {
       name: 'ctaUrl',
       type: 'text',
-      admin: { description: 'Call-to-action button URL' },
+      admin: { description: 'Call-to-action button URL/link' },
     },
     {
-      name: 'background',
+      name: 'image',
       type: 'relationship',
       relationTo: 'media',
-      admin: { description: 'Hero background image' },
+      admin: { description: 'Hero image (used as imageSrc in frontend)' },
     },
     {
       name: 'active',

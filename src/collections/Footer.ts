@@ -7,7 +7,7 @@ import type { CollectionConfig } from 'payload'
  * Public can read, only admins can modify.
  */
 export const Footer: CollectionConfig = {
-  slug: 'footer',
+  slug: 'footer-final',
   admin: {
     useAsTitle: 'copyrightMessage',
     defaultColumns: ['copyrightMessage', 'createdAt'],
@@ -56,6 +56,40 @@ export const Footer: CollectionConfig = {
       name: 'copyrightMessage',
       type: 'text',
       admin: { description: 'Copyright message (e.g., "Made with love for great people.")' },
+    },
+    {
+      name: 'titleLines',
+      type: 'array',
+      admin: { description: 'Title lines displayed in the footer CTA (eg:-Ready to get started with). Each entry is a single line.' },
+      fields: [
+        {
+          name: 'line',
+          type: 'text',
+          admin: { description: 'One title line' },
+        },
+      ],
+    },
+    {
+      name: 'titleSpans',
+      type: 'array',
+      admin: { description: 'Just like(Premier?).' },
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          admin: { description: 'Span text' },
+        },
+      ],
+    },
+    {
+      name: 'ctaButtonText',
+      type: 'text',
+      admin: { description: 'CTA button text displayed in the footer (e.g., Get a Consultation)' },
+    },
+    {
+      name: 'ctaButtonUrl',
+      type: 'text',
+      admin: { description: 'CTA button URL (optional)' },
     },
     {
       name: 'copyrightYear',

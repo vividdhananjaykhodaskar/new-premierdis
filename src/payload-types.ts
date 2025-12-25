@@ -69,13 +69,14 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    'contact-us': ContactUs;
-    'contact-submissions': ContactSubmission;
-    features: Feature;
-    footer: Footer;
-    hero: Hero;
-    'nav-items': NavItem;
-    'what-we-do': WhatWeDo;
+    'contact-us-content': ContactUsContent;
+    'contact-submissions-form': ContactSubmissionsForm;
+    'features-final': FeaturesFinal;
+    'footer-final': FooterFinal;
+    'hero-final': HeroFinal;
+    'navbar-final': NavbarFinal;
+    'what-wedo-final': WhatWedoFinal;
+    'services-final': ServicesFinal;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -85,13 +86,14 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
-    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
-    features: FeaturesSelect<false> | FeaturesSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-    hero: HeroSelect<false> | HeroSelect<true>;
-    'nav-items': NavItemsSelect<false> | NavItemsSelect<true>;
-    'what-we-do': WhatWeDoSelect<false> | WhatWeDoSelect<true>;
+    'contact-us-content': ContactUsContentSelect<false> | ContactUsContentSelect<true>;
+    'contact-submissions-form': ContactSubmissionsFormSelect<false> | ContactSubmissionsFormSelect<true>;
+    'features-final': FeaturesFinalSelect<false> | FeaturesFinalSelect<true>;
+    'footer-final': FooterFinalSelect<false> | FooterFinalSelect<true>;
+    'hero-final': HeroFinalSelect<false> | HeroFinalSelect<true>;
+    'navbar-final': NavbarFinalSelect<false> | NavbarFinalSelect<true>;
+    'what-wedo-final': WhatWedoFinalSelect<false> | WhatWedoFinalSelect<true>;
+    'services-final': ServicesFinalSelect<false> | ServicesFinalSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -194,9 +196,9 @@ export interface Media {
  * Site-managed contact page content (separate from user submissions)
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-us".
+ * via the `definition` "contact-us-content".
  */
-export interface ContactUs {
+export interface ContactUsContent {
   id: number;
   /**
    * Set to true for the site-managed contact info (admin only)
@@ -215,9 +217,22 @@ export interface ContactUs {
    */
   locationTitle?: string | null;
   /**
-   * Address HTML/text for the location card
+   * Address HTML/text for the location card. Use <br/> or newlines to separate lines; frontend splits on <br/> or
+   * .
    */
   address?: string | null;
+  /**
+   * Structured address lines (preferred). Each entry is a single line; frontend will render each on its own line.
+   */
+  addressLines?:
+    | {
+        /**
+         * One address line
+         */
+        line?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * URL for See Map link
    */
@@ -239,9 +254,26 @@ export interface ContactUs {
    */
   phoneTitle?: string | null;
   /**
-   * Phone numbers text (can include line breaks)
+   * Phone numbers text (can include multiple numbers separated by <br/> or newlines). Frontend splits on <br/> or
+   * .
    */
   phoneNumbers?: string | null;
+  /**
+   * Structured phone numbers (preferred). Each entry can have a label and a number.
+   */
+  phoneList?:
+    | {
+        /**
+         * Optional label for the phone number (e.g., Local, Toll Free)
+         */
+        label?: string | null;
+        /**
+         * Phone number string (displayed as-is)
+         */
+        number?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * tel: link or other URL for phone action
    */
@@ -261,9 +293,9 @@ export interface ContactUs {
  * Public contact form submissions
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-submissions".
+ * via the `definition` "contact-submissions-form".
  */
-export interface ContactSubmission {
+export interface ContactSubmissionsForm {
   id: number;
   /**
    * Contact person name
@@ -296,22 +328,30 @@ export interface ContactSubmission {
  * Manage feature items
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "features".
+ * via the `definition` "features-final".
  */
-export interface Feature {
+export interface FeaturesFinal {
   id: number;
+  /**
+   * Main section header title (e.g., Everything in One Place)
+   */
+  mainTitle?: string | null;
+  /**
+   * Main section header subtitle (e.g., We go further than all of our competitors.)
+   */
+  mainSubtitle?: string | null;
   /**
    * Feature title
    */
   title: string;
   /**
+   * Feature subtitle (renders under title)
+   */
+  subtitle?: string | null;
+  /**
    * Feature description
    */
   description?: string | null;
-  /**
-   * Icon class or identifier
-   */
-  icon?: string | null;
   /**
    * Feature image
    */
@@ -335,9 +375,9 @@ export interface Feature {
  * Manage footer sections and links
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
+ * via the `definition` "footer-final".
  */
-export interface Footer {
+export interface FooterFinal {
   id: number;
   /**
    * Footer sections with links
@@ -372,6 +412,38 @@ export interface Footer {
    */
   copyrightMessage?: string | null;
   /**
+   * Title lines displayed in the footer CTA (first part before span). Each entry is a single line.
+   */
+  titleLines?:
+    | {
+        /**
+         * One title line
+         */
+        line?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Span text(s) to render inside <span> in the footer title (kept as array to allow emphasis segments).
+   */
+  titleSpans?:
+    | {
+        /**
+         * Span text
+         */
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * CTA button text displayed in the footer (e.g., Get a Consultation)
+   */
+  ctaButtonText?: string | null;
+  /**
+   * CTA button URL (optional)
+   */
+  ctaButtonUrl?: string | null;
+  /**
    * Copyright text (e.g., "© Copyright 2024 - JCAR LLC dba Premier...")
    */
   copyrightYear?: string | null;
@@ -390,30 +462,42 @@ export interface Footer {
  * Manage hero section content
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero".
+ * via the `definition` "hero-final".
  */
-export interface Hero {
+export interface HeroFinal {
   id: number;
   /**
-   * Main hero headline
+   * Main headline's premier part (e.g. 'Premier')
    */
-  headline: string;
+  titlePremier: string;
   /**
-   * Subheading text
+   * Subtitle lines (one per row) e.g. Document / Imaging / Solutions
    */
-  subheadline?: string | null;
+  subtitleLines?:
+    | {
+        /**
+         * One subtitle line
+         */
+        line?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Supporting subtext under the title
+   */
+  subtext?: string | null;
   /**
    * Call-to-action button text
    */
   ctaText?: string | null;
   /**
-   * Call-to-action button URL
+   * Call-to-action button URL/link
    */
   ctaUrl?: string | null;
   /**
-   * Hero background image
+   * Hero image (used as imageSrc in frontend)
    */
-  background?: (number | null) | Media;
+  image?: (number | null) | Media;
   /**
    * Whether this hero section is visible (only one active at a time)
    */
@@ -430,9 +514,9 @@ export interface Hero {
  * Manage navigation menu items
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "nav-items".
+ * via the `definition` "navbar-final".
  */
-export interface NavItem {
+export interface NavbarFinal {
   id: number;
   /**
    * Menu item text
@@ -451,9 +535,25 @@ export interface NavItem {
    */
   visible?: boolean | null;
   /**
+   * Mark this document as site settings (store logoText/logoImage here). Only one settings doc is recommended.
+   */
+  isSiteSettings?: boolean | null;
+  /**
+   * Optional site logo text used when this document is marked as site settings
+   */
+  logoText?: string | null;
+  /**
+   * Optional site logo image used when this document is marked as site settings
+   */
+  logoImage?: (number | null) | Media;
+  /**
    * Whether this link opens in a new tab
    */
   external?: boolean | null;
+  /**
+   * Display as a button instead of a link (e.g., Free Trial)
+   */
+  isButton?: boolean | null;
   /**
    * Whether this nav item is active (preferred over visible)
    */
@@ -469,50 +569,77 @@ export interface NavItem {
  * Manage "What We Do" section items
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "what-we-do".
+ * via the `definition` "what-wedo-final".
  */
-export interface WhatWeDo {
+export interface WhatWedoFinal {
   id: number;
-  /**
-   * Item title
-   */
-  title: string;
-  /**
-   * Item subtitle
-   */
-  subtitle?: string | null;
-  /**
-   * Item description (also used as main section description if present on first item)
-   */
-  description?: string | null;
-  /**
-   * Item image
-   */
-  image?: (number | null) | Media;
-  /**
-   * Display order
-   */
-  order?: number | null;
-  /**
-   * Whether this item is visible
-   */
-  active?: boolean | null;
-  /**
-   * Main section title (used only on first item)
-   */
-  mainTitle?: string | null;
   /**
    * Small label shown above the main title (e.g., ONE-STOP SOLUTION)
    */
   label?: string | null;
   /**
-   * Call-to-action text for the main section
+   * Main section title (e.g., What we do)
+   */
+  title?: string | null;
+  /**
+   * Main description text
+   */
+  description?: string | null;
+  /**
+   * Call-to-action text (e.g., Call us for a guided demonstration)
    */
   cta?: string | null;
   /**
-   * Optional video embed URL (e.g., https://www.youtube.com/embed/...)
+   * YouTube embed URL (e.g., https://www.youtube.com/embed/A0hbkovu_F8)
    */
   videoUrl?: string | null;
+  /**
+   * Button text (e.g., Check out our live demo site)
+   */
+  buttonText?: string | null;
+  /**
+   * Button URL/link
+   */
+  buttonUrl?: string | null;
+  /**
+   * Whether this section is active/visible
+   */
+  active?: boolean | null;
+  /**
+   * Optional publication date/time
+   */
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage service offerings
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-final".
+ */
+export interface ServicesFinal {
+  id: number;
+  /**
+   * Service title
+   */
+  title: string;
+  /**
+   * Service subtitle
+   */
+  subtitle: string;
+  /**
+   * Service icon image
+   */
+  icon: number | Media;
+  /**
+   * Display order
+   */
+  order?: number | null;
+  /**
+   * Whether this service is visible
+   */
+  active?: boolean | null;
   /**
    * Optional publication date/time
    */
@@ -553,32 +680,36 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'contact-us';
-        value: number | ContactUs;
+        relationTo: 'contact-us-content';
+        value: number | ContactUsContent;
       } | null)
     | ({
-        relationTo: 'contact-submissions';
-        value: number | ContactSubmission;
+        relationTo: 'contact-submissions-form';
+        value: number | ContactSubmissionsForm;
       } | null)
     | ({
-        relationTo: 'features';
-        value: number | Feature;
+        relationTo: 'features-final';
+        value: number | FeaturesFinal;
       } | null)
     | ({
-        relationTo: 'footer';
-        value: number | Footer;
+        relationTo: 'footer-final';
+        value: number | FooterFinal;
       } | null)
     | ({
-        relationTo: 'hero';
-        value: number | Hero;
+        relationTo: 'hero-final';
+        value: number | HeroFinal;
       } | null)
     | ({
-        relationTo: 'nav-items';
-        value: number | NavItem;
+        relationTo: 'navbar-final';
+        value: number | NavbarFinal;
       } | null)
     | ({
-        relationTo: 'what-we-do';
-        value: number | WhatWeDo;
+        relationTo: 'what-wedo-final';
+        value: number | WhatWedoFinal;
+      } | null)
+    | ({
+        relationTo: 'services-final';
+        value: number | ServicesFinal;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -666,20 +797,33 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-us_select".
+ * via the `definition` "contact-us-content_select".
  */
-export interface ContactUsSelect<T extends boolean = true> {
+export interface ContactUsContentSelect<T extends boolean = true> {
   isSiteContent?: T;
   headerTitle?: T;
   headerSubtitle?: T;
   locationTitle?: T;
   address?: T;
+  addressLines?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
   seeMapLink?: T;
   emailTitle?: T;
   emailAddress?: T;
   emailLink?: T;
   phoneTitle?: T;
   phoneNumbers?: T;
+  phoneList?:
+    | T
+    | {
+        label?: T;
+        number?: T;
+        id?: T;
+      };
   phoneLink?: T;
   active?: T;
   publishedAt?: T;
@@ -688,9 +832,9 @@ export interface ContactUsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-submissions_select".
+ * via the `definition` "contact-submissions-form_select".
  */
-export interface ContactSubmissionsSelect<T extends boolean = true> {
+export interface ContactSubmissionsFormSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   subject?: T;
@@ -702,12 +846,14 @@ export interface ContactSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "features_select".
+ * via the `definition` "features-final_select".
  */
-export interface FeaturesSelect<T extends boolean = true> {
+export interface FeaturesFinalSelect<T extends boolean = true> {
+  mainTitle?: T;
+  mainSubtitle?: T;
   title?: T;
+  subtitle?: T;
   description?: T;
-  icon?: T;
   image?: T;
   order?: T;
   active?: T;
@@ -717,9 +863,9 @@ export interface FeaturesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
+ * via the `definition` "footer-final_select".
  */
-export interface FooterSelect<T extends boolean = true> {
+export interface FooterFinalSelect<T extends boolean = true> {
   sections?:
     | T
     | {
@@ -734,6 +880,20 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyrightMessage?: T;
+  titleLines?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  titleSpans?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  ctaButtonText?: T;
+  ctaButtonUrl?: T;
   copyrightYear?: T;
   active?: T;
   publishedAt?: T;
@@ -742,14 +902,20 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hero_select".
+ * via the `definition` "hero-final_select".
  */
-export interface HeroSelect<T extends boolean = true> {
-  headline?: T;
-  subheadline?: T;
+export interface HeroFinalSelect<T extends boolean = true> {
+  titlePremier?: T;
+  subtitleLines?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  subtext?: T;
   ctaText?: T;
   ctaUrl?: T;
-  background?: T;
+  image?: T;
   active?: T;
   publishedAt?: T;
   updatedAt?: T;
@@ -758,14 +924,18 @@ export interface HeroSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "nav-items_select".
+ * via the `definition` "navbar-final_select".
  */
-export interface NavItemsSelect<T extends boolean = true> {
+export interface NavbarFinalSelect<T extends boolean = true> {
   label?: T;
   url?: T;
   order?: T;
   visible?: T;
+  isSiteSettings?: T;
+  logoText?: T;
+  logoImage?: T;
   external?: T;
+  isButton?: T;
   active?: T;
   publishedAt?: T;
   updatedAt?: T;
@@ -773,19 +943,31 @@ export interface NavItemsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "what-we-do_select".
+ * via the `definition` "what-wedo-final_select".
  */
-export interface WhatWeDoSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  description?: T;
-  image?: T;
-  order?: T;
-  active?: T;
-  mainTitle?: T;
+export interface WhatWedoFinalSelect<T extends boolean = true> {
   label?: T;
+  title?: T;
+  description?: T;
   cta?: T;
   videoUrl?: T;
+  buttonText?: T;
+  buttonUrl?: T;
+  active?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-final_select".
+ */
+export interface ServicesFinalSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  icon?: T;
+  order?: T;
+  active?: T;
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;

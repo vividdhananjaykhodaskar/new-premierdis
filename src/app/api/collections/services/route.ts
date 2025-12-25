@@ -19,13 +19,21 @@ export const GET = async (request: Request) => {
     const url = new URL(request.url)
     const qp = url.searchParams
 
+    const where: any = {}
+    if (qp.get('where[active][equals]') === 'true') {
+      where.active = { equals: true }
+    }
+
     const limit = qp.get('limit') ? Number(qp.get('limit')) : 50
     const depth = qp.get('depth') ? Number(qp.get('depth')) : 1
+    const sort = qp.get('sort') || 'order'
 
     const result = await payload.find({
-      collection: 'footer-final',
+      collection: 'services-final',
+      where: Object.keys(where).length ? where : undefined,
       limit,
       depth,
+      sort,
     })
 
     return new Response(JSON.stringify(result), {

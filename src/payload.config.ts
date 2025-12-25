@@ -16,6 +16,7 @@ import { Footer } from './collections/Footer'
 import { Hero } from './collections/Hero'
 import { NavBar } from './collections/NavBar'
 import { WhatWeDo } from './collections/WhatWeDo'
+import { Services } from './collections/Services'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +36,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, ContactUs, ContactSubmissions, Features, Footer, Hero, NavBar, WhatWeDo],
+  collections: [Users, Media, ContactUs, ContactSubmissions, Features, Footer, Hero, NavBar, WhatWeDo, Services],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

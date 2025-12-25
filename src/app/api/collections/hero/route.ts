@@ -29,7 +29,7 @@ export const GET = async (request: Request) => {
     const depth = qp.get('depth') ? Number(qp.get('depth')) : 1
 
     const result = await payload.find({
-      collection: 'hero',
+      collection: 'hero-final',
       where: Object.keys(where).length ? where : undefined,
       limit,
       depth,

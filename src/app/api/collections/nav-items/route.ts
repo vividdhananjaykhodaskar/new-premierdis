@@ -29,7 +29,7 @@ export const GET = async (request: Request) => {
     const sort = qp.get('sort') || 'order'
 
     const result = await payload.find({
-      collection: 'nav-items',
+      collection: 'navbar-final',
       where: Object.keys(where).length ? where : undefined,
       limit,
       depth,

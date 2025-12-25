@@ -7,7 +7,7 @@ import type { CollectionConfig } from 'payload'
  * Public can read, only admins can modify.
  */
 export const NavBar: CollectionConfig = {
-  slug: 'nav-items',
+  slug: 'navbar-final',
   admin: {
     useAsTitle: 'label',
     defaultColumns: ['label', 'url', 'order', 'visible'],
@@ -47,10 +47,33 @@ export const NavBar: CollectionConfig = {
       admin: { description: 'Whether this menu item is visible' },
     },
     {
+      name: 'isSiteSettings',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Mark this document as site settings (store logoText/logoImage here). Only one settings doc is recommended.' },
+    },
+    {
+      name: 'logoText',
+      type: 'text',
+      admin: { description: 'Optional site logo text used when this document is marked as site settings' },
+    },
+    {
+      name: 'logoImage',
+      type: 'relationship',
+      relationTo: 'media',
+      admin: { description: 'Optional site logo image used when this document is marked as site settings' },
+    },
+    {
       name: 'external',
       type: 'checkbox',
       defaultValue: false,
       admin: { description: 'Whether this link opens in a new tab' },
+    },
+    {
+      name: 'isButton',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Display as a button instead of a link (e.g., Free Trial)' },
     },
     {
       name: 'active',

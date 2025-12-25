@@ -7,7 +7,7 @@ import type { CollectionConfig } from 'payload'
  * Public can read (for listing), but only admins can manage.
  */
 export const ContactUs: CollectionConfig = {
-  slug: 'contact-us',
+  slug: 'contact-us-content',
   admin: {
     useAsTitle: 'headerTitle',
     defaultColumns: ['headerTitle', 'isSiteContent', 'createdAt'],
@@ -51,7 +51,19 @@ export const ContactUs: CollectionConfig = {
     {
       name: 'address',
       type: 'textarea',
-      admin: { description: 'Address HTML/text for the location card' },
+      admin: { description: 'Address HTML/text for the location card. Use <br/> or newlines to separate lines; frontend splits on <br/> or \n.' },
+    },
+    {
+      name: 'addressLines',
+      type: 'array',
+      admin: { description: 'Structured address lines (preferred). Each entry is a single line; frontend will render each on its own line.' },
+      fields: [
+        {
+          name: 'line',
+          type: 'text',
+          admin: { description: 'One address line' },
+        },
+      ],
     },
     {
       name: 'seeMapLink',
@@ -85,7 +97,24 @@ export const ContactUs: CollectionConfig = {
     {
       name: 'phoneNumbers',
       type: 'textarea',
-      admin: { description: 'Phone numbers text (can include line breaks)' },
+      admin: { description: 'Phone numbers text (can include multiple numbers separated by <br/> or newlines). Frontend splits on <br/> or \n.' },
+    },
+    {
+      name: 'phoneList',
+      type: 'array',
+      admin: { description: 'Structured phone numbers (preferred). Each entry can have a label and a number.' },
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          admin: { description: 'Optional label for the phone number (e.g., Local, Toll Free)' },
+        },
+        {
+          name: 'number',
+          type: 'text',
+          admin: { description: 'Phone number string (displayed as-is)' },
+        },
+      ],
     },
     {
       name: 'phoneLink',
