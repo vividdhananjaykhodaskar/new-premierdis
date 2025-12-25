@@ -36,6 +36,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  // Enable debug in non-production to expose full error stacks during development
+  debug: !isProduction,
   collections: [Users, Media, ContactUs, ContactSubmissions, Features, Footer, Hero, NavBar, WhatWeDo, Services],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

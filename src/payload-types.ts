@@ -412,7 +412,7 @@ export interface FooterFinal {
    */
   copyrightMessage?: string | null;
   /**
-   * Title lines displayed in the footer CTA (first part before span). Each entry is a single line.
+   * Title lines displayed in the footer CTA (eg:-Ready to get started with). Each entry is a single line.
    */
   titleLines?:
     | {
@@ -424,7 +424,7 @@ export interface FooterFinal {
       }[]
     | null;
   /**
-   * Span text(s) to render inside <span> in the footer title (kept as array to allow emphasis segments).
+   * Just like(Premier?).
    */
   titleSpans?:
     | {
